@@ -22,8 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-// #include "bip39.h"
-#include "interface_w_c.h"
+#include "bip39.h"
+// #include "interface_w_c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
