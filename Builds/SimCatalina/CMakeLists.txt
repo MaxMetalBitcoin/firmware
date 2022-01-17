@@ -4,11 +4,13 @@ cmake_minimum_required(VERSION 3.14)
 # Edit your MCU information up to the next border
 project(mmbtc_firmware)
 
+set(TEMP_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tmp)
+
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
 set(PROJECT_DIR ${SRC_DIR}/PROJECT)
 set(PLATFORM_DIR ${SRC_DIR}/Platforms/SimCatalina)
 set(MICRO_BITCOIN_DIR ${SRC_DIR}/Libs/uBitcoin/src)
-set(LVGL_DIR ${SRC_DIR}/Libs/lvgl/src)
+set(LVGL_DIR ${SRC_DIR}/Libs/lvgl)
 
 set(MCU_FAMILY STM32F3xx)
 set(MCU_MODEL STM32F303xx)
@@ -28,10 +30,12 @@ set(CMAKE_CXX_EXTENSIONS ON)
 set(PROJECT_INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PLATFORM_DIR}
-    ${MICRO_BITCOIN_DIR}/
+    ${MICRO_BITCOIN_DIR}
     ${MICRO_BITCOIN_DIR}/utility
     ${MICRO_BITCOIN_DIR}/utility/trezor
 
+    # ${LVGL_DIR}
+    # ${LVGL_DIR}/demos/benchmark
     # ${MICRO_BITCOIN_DIR}/c_interface
     ${PROJECT_DIR})
 
@@ -44,6 +48,8 @@ file(GLOB_RECURSE PROJECT_SOURCES FOLLOW_SYMLINKS
     # ${MICRO_BITCOIN_DIR}/c_interface/interface_w_c.cpp
     ${MICRO_BITCOIN_DIR}/utility/*.c
     ${MICRO_BITCOIN_DIR}/utility/trezor/*.c
+
+    # ${LVGL_DIR}/demos/benchmark
 
     ${PLATFORM_DIR}/*.c
     ${PROJECT_DIR}/*.cpp
@@ -64,12 +70,17 @@ target_include_directories(${EXECUTABLE} PRIVATE
 
 # ADD SDL - BEGIN
 list(APPEND CMAKE_MODULE_PATH ${SRC_DIR}/Libs/sdl2)
+# list(APPEND CMAKE_MODULE_PATH ${SRC_DIR}/Libs/lvgl/cmake)
 
 find_package(SDL2 REQUIRED)
+# add_subdirectory(${LVGL_DIR} ${TEMP_BUILD_DIR}/lvgl)
+# find_package(lvgl REQUIRED)
 # find_package(SDL2_image REQUIRED)
 # find_package(SDL2_gfx REQUIRED)
 
 # Link SDL2::Main, SDL2::Image and SDL2::GFX to our project
+# target_link_libraries(mmbtc_firmware SDL2::Main lvgl::lvgl)
+# target_link_libraries(mmbtc_firmware SDL2::Main lvgl)
 target_link_libraries(mmbtc_firmware SDL2::Main)
 # ADD SDL - END
 
@@ -87,6 +98,7 @@ target_link_libraries(mmbtc_firmware SDL2::Main)
 # FetchContent_MakeAvailable(lvgl)
 
 # # The target "mmbtc_firmware" depends on LVGL
+# add_subdirectory(${LVGL_DIR})
 # target_link_libraries(mmbtc_firmware PRIVATE lvgl::lvgl)
 
 # ADD LVGL - END

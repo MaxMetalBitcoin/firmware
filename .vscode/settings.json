@@ -6,6 +6,8 @@
     "interface_w_c.h": "c",
     "cstdio": "c",
     "init_target.h": "c",
-    "mbtc_connector.h": "c"
+    "mbtc_connector.h": "c",
+    "lv_demo_benchmark.h": "c",
+    "init_sdl.h": "c"
   }
 }

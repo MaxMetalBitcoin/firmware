@@ -1,5 +1,8 @@
 #include "init_target.h"
+// #include "init_sdl.h"
 #include "stdio.h"
+#include "time.h"
+// #include "lvgl.h"
 #include <SDL.h>
 
 #include "mbtc_connector.h"
@@ -7,8 +10,9 @@
 int init_target(void)
 {
 
-  printf("hello");
-  printf(mbtc_get_key());
+  printf("hello\n");
+  printf("%s", mbtc_get_key());
+  printf("\n");
 
   char quit = 0;
   SDL_Event event;
@@ -33,5 +37,23 @@ int init_target(void)
   SDL_DestroyWindow(window);
   SDL_Quit();
 
+  // sdl_init();
+
   return 0;
 }
+
+// void delay(int milli_seconds)
+// {
+//   // Storing start time
+//   clock_t start_time = clock();
+
+//   // looping till required time is not achieved
+//   while (clock() < start_time + milli_seconds)
+//     ;
+// }
+
+// int target_lvgl_loop(void)
+// {
+//   delay(5);
+//   lv_task_handler();
+// }

@@ -6,7 +6,16 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "sdl.h"
+#include <SDL.h>
+// #include "lvgl.h"
+
+#include "stdio.h"
+
+// #include "lv_drv_conf.h"
+
+#if 0
+
+// #defind USE_SDL 1
 #if USE_MONITOR || USE_SDL
 
 #if LV_USE_GPU_SDL
@@ -50,7 +59,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include SDL_INCLUDE_PATH
+// #include SDL_INCLUDE_PATH
 
 /*********************
  *      DEFINES
@@ -673,4 +682,7 @@ static int tick_thread(void *data)
 }
 #endif
 
-#endif /*USE_MONITOR || USE_SDL*/
+// #endif /*USE_MONITOR || USE_SDL*/
+
+#endif
+#endif // 0

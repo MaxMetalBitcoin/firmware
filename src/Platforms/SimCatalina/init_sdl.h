@@ -11,10 +11,10 @@ extern "C"
 {
 #endif
 
-/*********************
+  /*********************
  *      INCLUDES
  *********************/
-// #define LV_CONF_INCLUDE_SIMPLE 1
+  // #define LV_CONF_INCLUDE_SIMPLE 1
 
 #ifndef LV_DRV_NO_CONF
 
@@ -24,6 +24,8 @@ extern "C"
 #endif
 #endif
 
+  // #define USE_SDL
+
 #if USE_MONITOR || USE_SDL
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
@@ -31,9 +33,7 @@ extern "C"
 #else
 #include "lvgl/lvgl.h"
 #endif
-// #include "lvgl.h"
-
-
+  // #include "lvgl.h"
 
   /*********************
  *      DEFINES
@@ -104,4 +104,4 @@ extern "C"
 } /* extern "C" */
 #endif
 
-#endif /* SDL_H */
+// #endif /* SDL_H */
