@@ -20,6 +20,8 @@
 #include "main.h"
 #include "cmsis_os.h"
 
+#include "init_target.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "bip39.h"
@@ -81,7 +83,7 @@ void StartDefaultTask(void *argument);
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
+int init_target(void)
 {
   /* USER CODE BEGIN 1 */
 

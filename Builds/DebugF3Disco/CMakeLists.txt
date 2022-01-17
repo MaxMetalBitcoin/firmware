@@ -3,8 +3,11 @@ cmake_minimum_required(VERSION 3.12)
 # ##############################################################################
 # Edit your MCU information up to the next border
 project(mmbtc_firmware)
-set(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/PROJECT)
-set(MICRO_BITCOIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/Libs/uBitcoin/src)
+
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
+set(PROJECT_DIR ${SRC_DIR}/PROJECT)
+set(PLATFORM_DIR ${SRC_DIR}/Platforms/F3Disco)
+set(MICRO_BITCOIN_DIR ${SRC_DIR}/Libs/uBitcoin/src)
 
 set(MCU_FAMILY STM32F3xx)
 set(MCU_MODEL STM32F303xx)
@@ -15,8 +18,8 @@ set(CPU_PARAMETERS
     -mfpu=fpv4-sp-d16
     -mfloat-abi=hard)
 
-set(STARTUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Core/Startup/startup_stm32f303vctx.s)
-set(MCU_LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/STM32F303VCTX_FLASH.ld)
+set(STARTUP_SCRIPT ${PLATFORM_DIR}/Core/Startup/startup_stm32f303vctx.s)
+set(MCU_LINKER_SCRIPT ${PLATFORM_DIR}/STM32F303VCTX_FLASH.ld)
 # ##############################################################################
 set(EXECUTABLE ${CMAKE_PROJECT_NAME})
 enable_language(C CXX ASM)
@@ -29,14 +32,14 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 # Headers
 set(CUBEMX_INCLUDE_DIRECTORIES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Core/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Drivers/${MCU_FAMILY}_HAL_Driver/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Drivers/${MCU_FAMILY}_HAL_Driver/Inc/Legacy
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Drivers/CMSIS/Include
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Middlewares/Third_Party/FreeRTOS/Source/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2)
+    ${PLATFORM_DIR}/Core/Inc
+    ${PLATFORM_DIR}/Drivers/${MCU_FAMILY}_HAL_Driver/Inc
+    ${PLATFORM_DIR}/Drivers/${MCU_FAMILY}_HAL_Driver/Inc/Legacy
+    ${PLATFORM_DIR}/Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Include
+    ${PLATFORM_DIR}/Drivers/CMSIS/Include
+    ${PLATFORM_DIR}/Middlewares/Third_Party/FreeRTOS/Source/include
+    ${PLATFORM_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
+    ${PLATFORM_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2)
 set(PROJECT_INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${MICRO_BITCOIN_DIR}/utility/trezor
@@ -45,9 +48,9 @@ set(PROJECT_INCLUDE_DIRECTORIES
 
 # Sources
 file(GLOB_RECURSE STM32CUBEMX_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Core/*.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Drivers/*.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platforms/F3Disco/Middlewares/*.c)
+    ${PLATFORM_DIR}/Core/*.c
+    ${PLATFORM_DIR}/Drivers/*.c
+    ${PLATFORM_DIR}/Middlewares/*.c)
 file(GLOB_RECURSE PROJECT_SOURCES FOLLOW_SYMLINKS
     # ${MICRO_BITCOIN_DIR}/Bitcoin.cpp
     # ${MICRO_BITCOIN_DIR}/Conversion.cpp

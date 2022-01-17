@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "bitcoin.h": "c",
+    "ubitcoin_conf.h": "c",
+    "string": "cpp",
+    "interface_w_c.h": "c",
+    "cstdio": "c"
+  }
+}
