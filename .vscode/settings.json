@@ -4,6 +4,8 @@
     "ubitcoin_conf.h": "c",
     "string": "cpp",
     "interface_w_c.h": "c",
-    "cstdio": "c"
+    "cstdio": "c",
+    "init_target.h": "c",
+    "mbtc_connector.h": "c"
   }
 }

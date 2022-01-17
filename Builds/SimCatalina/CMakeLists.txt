@@ -28,6 +28,8 @@ set(CMAKE_CXX_EXTENSIONS ON)
 set(PROJECT_INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PLATFORM_DIR}
+    ${MICRO_BITCOIN_DIR}/
+    ${MICRO_BITCOIN_DIR}/utility
     ${MICRO_BITCOIN_DIR}/utility/trezor
 
     # ${MICRO_BITCOIN_DIR}/c_interface
@@ -38,9 +40,9 @@ file(GLOB_RECURSE PROJECT_SOURCES FOLLOW_SYMLINKS
     # ${MICRO_BITCOIN_DIR}/Bitcoin.cpp
     # ${MICRO_BITCOIN_DIR}/Conversion.cpp
     # ${MICRO_BITCOIN_DIR}/Hash.cpp
-    # ${MICRO_BITCOIN_DIR}/*.cpp
+    ${MICRO_BITCOIN_DIR}/*.cpp
     # ${MICRO_BITCOIN_DIR}/c_interface/interface_w_c.cpp
-    # ${MICRO_BITCOIN_DIR}/utility/*.c
+    ${MICRO_BITCOIN_DIR}/utility/*.c
     ${MICRO_BITCOIN_DIR}/utility/trezor/*.c
 
     ${PLATFORM_DIR}/*.c
