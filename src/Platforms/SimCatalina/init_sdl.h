@@ -14,26 +14,26 @@ extern "C"
   /*********************
  *      INCLUDES
  *********************/
-  // #define LV_CONF_INCLUDE_SIMPLE 1
+
+#define LV_CONF_INCLUDE_SIMPLE 1
 
 #ifndef LV_DRV_NO_CONF
-
+#ifdef LV_CONF_INCLUDE_SIMPLE
 #include "lv_drv_conf.h"
 #else
 #include "../../lv_drv_conf.h"
 #endif
 #endif
 
-  // #define USE_SDL
-
 #if USE_MONITOR || USE_SDL
+
+#define LV_LVGL_H_INCLUDE_SIMPLE 1
 
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
 #include "lvgl.h"
 #else
 #include "lvgl/lvgl.h"
 #endif
-  // #include "lvgl.h"
 
   /*********************
  *      DEFINES
@@ -104,4 +104,4 @@ extern "C"
 } /* extern "C" */
 #endif
 
-// #endif /* SDL_H */
+#endif /* SDL_H */

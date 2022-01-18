@@ -8,6 +8,7 @@
     "init_target.h": "c",
     "mbtc_connector.h": "c",
     "lv_demo_benchmark.h": "c",
-    "init_sdl.h": "c"
+    "init_sdl.h": "c",
+    "sdl.h": "c"
   }
 }

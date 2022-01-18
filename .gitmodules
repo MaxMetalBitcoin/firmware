@@ -7,3 +7,6 @@
 [submodule "src/Libs/sdl2"]
 	path = src/Libs/sdl2
 	url = https://gitlab.com/aminosbh/sdl2-cmake-modules.git
+[submodule "src/Libs/lv_drivers"]
+	path = src/Libs/lv_drivers
+	url = git@github.com:lvgl/lv_drivers.git

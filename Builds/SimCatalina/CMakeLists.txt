@@ -11,6 +11,7 @@ set(PROJECT_DIR ${SRC_DIR}/PROJECT)
 set(PLATFORM_DIR ${SRC_DIR}/Platforms/SimCatalina)
 set(MICRO_BITCOIN_DIR ${SRC_DIR}/Libs/uBitcoin/src)
 set(LVGL_DIR ${SRC_DIR}/Libs/lvgl)
+set(LVGL_DRIVERS_DIR ${SRC_DIR}/Libs/lv_drivers)
 
 set(MCU_FAMILY STM32F3xx)
 set(MCU_MODEL STM32F303xx)
@@ -73,15 +74,16 @@ list(APPEND CMAKE_MODULE_PATH ${SRC_DIR}/Libs/sdl2)
 # list(APPEND CMAKE_MODULE_PATH ${SRC_DIR}/Libs/lvgl/cmake)
 
 find_package(SDL2 REQUIRED)
-# add_subdirectory(${LVGL_DIR} ${TEMP_BUILD_DIR}/lvgl)
+add_subdirectory(${LVGL_DIR} ${TEMP_BUILD_DIR}/lvgl)
+# add_subdirectory(${LVGL_DRIVERS_DIR} ${TEMP_BUILD_DIR}/lv_drivers)
 # find_package(lvgl REQUIRED)
 # find_package(SDL2_image REQUIRED)
 # find_package(SDL2_gfx REQUIRED)
 
 # Link SDL2::Main, SDL2::Image and SDL2::GFX to our project
 # target_link_libraries(mmbtc_firmware SDL2::Main lvgl::lvgl)
-# target_link_libraries(mmbtc_firmware SDL2::Main lvgl)
-target_link_libraries(mmbtc_firmware SDL2::Main)
+target_link_libraries(mmbtc_firmware SDL2::Main lvgl)
+# target_link_libraries(mmbtc_firmware SDL2::Main)
 # ADD SDL - END
 
 # ADD LVGL - BEGIN
