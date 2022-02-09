@@ -406,3 +406,20 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+#include "target_interface.h"
+
+void target_interface__init(void)
+{
+  init_target();
+}
+uint8_t target_interface__get_quit_event(void)
+{
+  return 0;
+}
+void target_interface__lv_task_handler(void)
+{
+}
+void target_interface__deinit(void)
+{
+}

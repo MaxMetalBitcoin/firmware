@@ -1,14 +1,17 @@
-#include "init_target.h"
-// #include "lvgl.h"
-// #include "lv_demo_benchmark.h"
+#include "target_interface.h"
+// #include "lv_examples.h"
 
 int main(void)
 {
-  // lv_init();
-  init_target();
+  target_interface__init();
 
-  //draw
-  // lv_demo_benchmark();
+  // lv_ex_get_started_2();
 
-  // target_lvgl_loop();
+  while (!target_interface__get_quit_event())
+  {
+    target_interface__lv_task_handler();
+  }
+
+  target_interface__deinit();
+  return 0;
 }

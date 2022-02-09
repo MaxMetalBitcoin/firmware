@@ -9,6 +9,19 @@
     "mbtc_connector.h": "c",
     "lv_demo_benchmark.h": "c",
     "init_sdl.h": "c",
-    "sdl.h": "c"
+    "sdl.h": "c",
+    "lvgl.h": "c",
+    "lv_hal.h": "c",
+    "lv_hal_disp.h": "c",
+    "lv_disp.h": "c",
+    "monitor.h": "c",
+    "mouse.h": "c",
+    "time.h": "c",
+    "lv_example_widgets.h": "c",
+    "lv_drv_conf.h": "c",
+    "lv_sdl_drv_display.h": "c",
+    "lv_sdl_drv_input.h": "c",
+    "target_interface.h": "c",
+    "lv_examples.h": "c"
   }
 }

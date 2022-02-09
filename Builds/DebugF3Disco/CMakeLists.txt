@@ -59,7 +59,7 @@ file(GLOB_RECURSE PROJECT_SOURCES FOLLOW_SYMLINKS
     # ${MICRO_BITCOIN_DIR}/c_interface/interface_w_c.cpp
     # ${MICRO_BITCOIN_DIR}/utility/*.c
     ${MICRO_BITCOIN_DIR}/utility/trezor/*.c
-    ${PROJECT_DIR}/*.cpp
+    # ${PROJECT_DIR}/*.cpp
     ${PROJECT_DIR}/*.c)
 
 # Executable files
