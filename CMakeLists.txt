@@ -10,6 +10,7 @@ set(LVGL_DIR "${SIM_CATALINA_DIR}/lvgl-sdl/lvgl")
 set(LVDRV_DIR "${SIM_CATALINA_DIR}/lvgl-sdl/lv_drv")
 set(DEMO_DIR "${SIM_CATALINA_DIR}/lvgl-sdl/example")
 set(PROJECT_DIR "${SRC_DIR}/PROJECT")
+set(MICRO_BITCOIN_DIR "${SRC_DIR}/Libs/uBitcoin/src")
 
 set(MCU_FAMILY STM32F3xx)
 set(MCU_MODEL STM32F303xx)
@@ -82,19 +83,51 @@ file(GLOB PLATFORM_F3DISCO_FILES
     "${F3_DISCO_DIR}/*.c"
 )
 
+file(GLOB_RECURSE STM32CUBEMX_SOURCES
+    ${F3_DISCO_DIR}/Core/*.c
+    ${F3_DISCO_DIR}/Drivers/*.c
+    ${F3_DISCO_DIR}/Middlewares/*.c)
+
+
+file(GLOB_RECURSE UBTC_SRCS FOLLOW_SYMLINKS
+    # ${MICRO_BITCOIN_DIR}/Bitcoin.cpp
+    # ${MICRO_BITCOIN_DIR}/Conversion.cpp
+    # ${MICRO_BITCOIN_DIR}/Hash.cpp
+    # ${MICRO_BITCOIN_DIR}/*.cpp
+    # ${MICRO_BITCOIN_DIR}/c_interface/interface_w_c.cpp
+    # ${MICRO_BITCOIN_DIR}/utility/*.c
+    ${MICRO_BITCOIN_DIR}/utility/trezor/*.c
+    # ${PROJECT_DIR}/*.cpp
+)
+
 if(${IS_SIM})
   add_executable(${EXECUTABLE}
                  ${LVGL_DRIVER_SOURCE_FILES}
                  ${LVGL_SOURCE_FILES}
+                 ${UBTC_SRCS}
                  ${DEMO_SOURCE_FILES}
   )
 endif()
 if(${IS_STM32F3DISC})
-  add_executable(${EXECUTABLE} 
+  add_executable(${EXECUTABLE}
+                 ${STM32CUBEMX_SOURCES}
                  ${PLATFORM_F3DISCO_FILES}
+                 ${UBTC_SRCS}
                  ${PROJECT_SOURCE_FILES}
   )
 endif()
+
+set(CUBEMX_INCLUDE_DIRECTORIES
+    ${F3_DISCO_DIR}/Core/Inc
+    ${F3_DISCO_DIR}/Drivers/${MCU_FAMILY}_HAL_Driver/Inc
+    ${F3_DISCO_DIR}/Drivers/${MCU_FAMILY}_HAL_Driver/Inc/Legacy
+    ${F3_DISCO_DIR}/Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Include
+    ${F3_DISCO_DIR}/Drivers/CMSIS/Include
+    ${F3_DISCO_DIR}/Middlewares/Third_Party/FreeRTOS/Source/include
+    ${F3_DISCO_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
+    ${F3_DISCO_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2)
+
+
 
 # Add lv_sdl_drv_display lib
 if(${IS_SIM})
@@ -130,14 +163,20 @@ if(${IS_SIM})
 endif()
 if(${IS_STM32F3DISC})
   target_include_directories(${EXECUTABLE} PRIVATE ${F3_DISCO_DIR})
+  target_include_directories(${EXECUTABLE} PRIVATE ${CUBEMX_INCLUDE_DIRECTORIES})
 endif()
 
 target_include_directories(${EXECUTABLE} PRIVATE ${PROJECT_DIR})
+target_include_directories(${EXECUTABLE} PRIVATE ${MICRO_BITCOIN_DIR}/utility/trezor)
 
 target_compile_features(firmware PUBLIC cxx_std_20)
 
 # custom for the builds to embedded
 if(${IS_STM32F3DISC})
+  target_compile_definitions(${EXECUTABLE} PRIVATE
+      ${MCU_MODEL}
+      USE_HAL_DRIVER)
+
   # Compiler and linker options
   target_compile_options(${EXECUTABLE} PRIVATE
       ${CPU_PARAMETERS}

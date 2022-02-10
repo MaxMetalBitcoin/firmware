@@ -1,7 +1,9 @@
 #include "target_interface.h"
+#include "init_target.h"
 
 void target_interface__init(void)
 {
+  init_target();
   // lv_init();
 
   // lv_sdl_init_display("Hola", 640, 480);
