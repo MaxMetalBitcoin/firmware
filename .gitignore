@@ -10,3 +10,8 @@
 
 build/**
 Builds/**
+
+itm.txt
+
+.vscode/**
+.settings/**
