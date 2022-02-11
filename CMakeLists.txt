@@ -14,12 +14,17 @@ set(MICRO_BITCOIN_DIR "${SRC_DIR}/Libs/uBitcoin/src")
 
 set(MCU_FAMILY STM32F3xx)
 set(MCU_MODEL STM32F303xx)
-set(CPU_PARAMETERS
+
+if(${IS_STM32F3DISC})
+
+  set(CPU_PARAMETERS
     -mcpu=cortex-m4
     -march=armv7e-m
     -mthumb
     -mfpu=fpv4-sp-d16
     -mfloat-abi=hard)
+
+endif()
 
 set(STARTUP_SCRIPT ${F3_DISCO_DIR}/Core/Startup/startup_stm32f303vctx.s)
 set(MCU_LINKER_SCRIPT ${F3_DISCO_DIR}/STM32F303VCTX_FLASH.ld)
@@ -28,7 +33,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set(CMAKE_C_FLAGS_RELEASE "-g3")
+# set(CMAKE_C_FLAGS_RELEASE "-g3")
 
 enable_language(C CXX ASM)
 set(CMAKE_C_STANDARD 11)
@@ -114,6 +119,7 @@ if(${IS_STM32F3DISC})
                  ${PLATFORM_F3DISCO_FILES}
                  ${UBTC_SRCS}
                  ${PROJECT_SOURCE_FILES}
+                 ${STARTUP_SCRIPT}
   )
 endif()
 
@@ -173,6 +179,7 @@ target_compile_features(firmware PUBLIC cxx_std_20)
 
 # custom for the builds to embedded
 if(${IS_STM32F3DISC})
+
   target_compile_definitions(${EXECUTABLE} PRIVATE
       ${MCU_MODEL}
       USE_HAL_DRIVER)
