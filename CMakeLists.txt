@@ -10,6 +10,7 @@ set(LVGL_DIR "${SIM_CATALINA_DIR}/lvgl-sdl/lvgl")
 set(LVDRV_DIR "${SIM_CATALINA_DIR}/lvgl-sdl/lv_drv")
 set(DEMO_DIR "${SIM_CATALINA_DIR}/lvgl-sdl/example")
 set(PROJECT_DIR "${SRC_DIR}/PROJECT")
+set(PROJECT_VIEWS_DIR "${SRC_DIR}/PROJECT/views")
 set(MICRO_BITCOIN_DIR "${SRC_DIR}/Libs/uBitcoin/src")
 
 set(MCU_FAMILY STM32F3xx)
@@ -43,8 +44,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
-# Remove this for your own project
-add_definitions(-DMAKE_EXAMPLE)
+if(${IS_SIM})
+  add_definitions(-DMAKE_EXAMPLE)
+endif()
 
 if(${IS_SIM})
   file(GLOB LVGL_DRIVER_SOURCE_FILES
@@ -84,8 +86,16 @@ file(GLOB PROJECT_SOURCE_FILES
     "${PROJECT_DIR}/*.c"
 )
 
+file(GLOB PROJECT_VIEWS_SOURCE_FILES
+    "${PROJECT_DIR}/views/*.c"
+)
+
 file(GLOB PLATFORM_F3DISCO_FILES
     "${F3_DISCO_DIR}/*.c"
+)
+
+file(GLOB PLATFORM_SIM_CATALINA_FILES
+    "${SIM_CATALINA_DIR}/*.c"
 )
 
 file(GLOB_RECURSE STM32CUBEMX_SOURCES
@@ -96,11 +106,17 @@ file(GLOB_RECURSE STM32CUBEMX_SOURCES
 
 file(GLOB_RECURSE UBTC_SRCS FOLLOW_SYMLINKS
     # ${MICRO_BITCOIN_DIR}/Bitcoin.cpp
+    # ${MICRO_BITCOIN_DIR}/BitcoinCurve.cpp
+    # ${MICRO_BITCOIN_DIR}/PSBT.cpp
     # ${MICRO_BITCOIN_DIR}/Conversion.cpp
+    # ${MICRO_BITCOIN_DIR}/BaseClasses.cpp
     # ${MICRO_BITCOIN_DIR}/Hash.cpp
+    # ${MICRO_BITCOIN_DIR}/Script.cpp
+    # ${MICRO_BITCOIN_DIR}/Transaction.cpp
+    # ${MICRO_BITCOIN_DIR}/HDWallet.cpp
     # ${MICRO_BITCOIN_DIR}/*.cpp
     # ${MICRO_BITCOIN_DIR}/c_interface/interface_w_c.cpp
-    # ${MICRO_BITCOIN_DIR}/utility/*.c
+    ${MICRO_BITCOIN_DIR}/utility/*.c
     ${MICRO_BITCOIN_DIR}/utility/trezor/*.c
     # ${PROJECT_DIR}/*.cpp
 )
@@ -109,15 +125,19 @@ if(${IS_SIM})
   add_executable(${EXECUTABLE}
                  ${LVGL_DRIVER_SOURCE_FILES}
                  ${LVGL_SOURCE_FILES}
+                 ${PLATFORM_SIM_CATALINA_FILES}
                  ${UBTC_SRCS}
-                 ${DEMO_SOURCE_FILES}
+                 ${PROJECT_VIEWS_SOURCE_FILES}
+                 ${PROJECT_SOURCE_FILES}
   )
 endif()
 if(${IS_STM32F3DISC})
   add_executable(${EXECUTABLE}
                  ${STM32CUBEMX_SOURCES}
+                 ${LVGL_SOURCE_FILES}
                  ${PLATFORM_F3DISCO_FILES}
                  ${UBTC_SRCS}
+                 ${PROJECT_VIEWS_SOURCE_FILES}
                  ${PROJECT_SOURCE_FILES}
                  ${STARTUP_SCRIPT}
   )
@@ -159,10 +179,10 @@ endif()
 
 # Main lvgl lib includes
 # for now sim only
-if(${IS_SIM})
+# if(${IS_SIM})
   target_include_directories(${EXECUTABLE} PRIVATE ${LVGL_DIR}/src/)
   target_include_directories(${EXECUTABLE} PRIVATE ${LVGL_DIR}/../)
-endif()
+# endif()
 
 if(${IS_SIM})
   target_include_directories(${EXECUTABLE} PRIVATE ${SIM_CATALINA_DIR})
@@ -173,6 +193,9 @@ if(${IS_STM32F3DISC})
 endif()
 
 target_include_directories(${EXECUTABLE} PRIVATE ${PROJECT_DIR})
+target_include_directories(${EXECUTABLE} PRIVATE ${PROJECT_DIR}/views)
+target_include_directories(${EXECUTABLE} PRIVATE ${MICRO_BITCOIN_DIR})
+target_include_directories(${EXECUTABLE} PRIVATE ${MICRO_BITCOIN_DIR}/utility)
 target_include_directories(${EXECUTABLE} PRIVATE ${MICRO_BITCOIN_DIR}/utility/trezor)
 
 target_compile_features(firmware PUBLIC cxx_std_20)
