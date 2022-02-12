@@ -1,11 +1,11 @@
 #include "target_interface.h"
-// #include "lv_examples.h"
+#include "main_menu.h"
 
 int main(void)
 {
   target_interface__init();
 
-  // lv_ex_get_started_2();
+  mmbtc_main_menu_render();
 
   while (!target_interface__get_quit_event())
   {

@@ -7,3 +7,12 @@
 **/*.bin
 **/*.hex
 **/*.map
+
+build/**
+Builds/**
+build-ninja/**
+
+itm.txt
+
+.vscode/**
+.settings/**
